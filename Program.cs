@@ -21,8 +21,10 @@ var enrollments = new List<Enrollment>
     new (honza, cs, Grade.Vyborne)
 };
 
+var students = new[] { martin, klara, honza };
+
 Console.WriteLine("Student Averages:");
-foreach (var student in new[] { martin, klara, honza })
+foreach (var student in students)
 {
     Console.WriteLine($"{student}: Average Grade = {student.GetAverageGrade():F2}");
 }
@@ -37,4 +39,14 @@ Console.WriteLine("\nFailing Students in CS:");
 foreach (var s in cs.GetFailingStudents())
 {
     Console.WriteLine(s.Name);
+}
+
+Console.WriteLine("\nStudents with at least one failing grade:");
+var studentsWithFailingGrades = students
+    .Where(s => s.Enrollments.Any(e => e.Grade == Grade.Nedostatecne))
+    .ToList();
+
+foreach (var student in studentsWithFailingGrades)
+{
+    Console.WriteLine(student.Name);
 }
